@@ -9,6 +9,8 @@ library(stringr)
 
 theURL <- "http://www.indeed.com/jobs?q=%22data+scientist%22&l=san+francisco"
 
+linksdf <- data.frame(JobLinks=character(), stringsAsFactors=FALSE) 
+
 scrape_indeed_links <- function(page_data){
 
 jobLinks <- page_data %>%
@@ -24,13 +26,14 @@ for (i in c(1:length(jobLinks))){
   jobLinks[i] <- paste("http://www.indeed.com", jobLinks[i], sep = "")
 }
 # create a dataframe with all the links from a page
-linksdf <- data.frame(JobLinks=jobLinks)
+linksdf <- data.frame(JobLinks=jobLinks, stringsAsFactors=FALSE)
 return(linksdf)
 }
 
 
 #get the total number of pages
-pages<- page_data %>%
+
+pages<- read_html(theURL) %>%
   html_nodes(xpath='//*[(@id = "searchCount")]') %>%
   html_text()
 
@@ -53,14 +56,13 @@ for (i in c(1:page_no)){
   linksdf<-rbind(linksdf,scrape_indeed_links(page_data))
 }
 
-
+str(linksdf)
 #Extract texts from all the links.(Work in progress)
 
 # for (i in seq(nrow(linksdf))) {
 #   Sys.sleep(1)
-#   text <- read_html(linksdf$JobLinks[1]) %>% # load the page
-#     
-#     html_text() # get the text
+# text <- read_html(linksdf$JobLinks[1]) %>% # load the page
+#    html_text() # get the text
 # }
 
 
