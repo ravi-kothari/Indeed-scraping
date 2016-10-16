@@ -9,7 +9,6 @@ library(stringr)
 
 theURL <- "http://www.indeed.com/jobs?q=%22data+scientist%22&l=san+francisco"
 
-
 scrape_indeed_links <- function(page_data){
 
 jobLinks <- page_data %>%
@@ -20,10 +19,11 @@ jobLinks <- page_data %>%
 #is.character(jobLinks)
 #length(jobLinks)
 
+# looping to get links from all the pages of search result.
 for (i in c(1:length(jobLinks))){
   jobLinks[i] <- paste("http://www.indeed.com", jobLinks[i], sep = "")
 }
-
+# create a dataframe with all the links from a page
 linksdf <- data.frame(JobLinks=jobLinks)
 return(linksdf)
 }
@@ -56,16 +56,14 @@ for (i in c(1:page_no)){
 }
 
 
+#Extract texts from all the links.(Work in progress)
 
+# for (i in seq(nrow(linksdf))) {
+#   Sys.sleep(1)
+#   text <- read_html(linksdf$JobLinks[1]) %>% # load the page
+#     
+#     html_text() # get the text
+# }
 
-
-
-
-
-#not required but just in case to understand.
-jobLinks_title <- page_data %>%
-  html_nodes(xpath='//*[contains(concat( " ", @class, " " ), concat( " ", "turnstileLink", " " ))]') %>%
-  html_text()
-#ignore this part.
 
 
