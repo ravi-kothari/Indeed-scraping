@@ -43,10 +43,8 @@ page_no = results/10;
 page_no = floor(page_no) #number of pages
 page_no_url = page_no*10 #for URL string
 
-
 # Loop through all the pages to get the job postings URL:
-
-output <- vector(mode="character", length=page_no)
+#output <- vector(mode="character", length=page_no)
 for (i in c(1:page_no)){
   Sys.sleep(1)
   page_no_url = (i-1)*10
